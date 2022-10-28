@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+        stage('Complete') {
+            steps {
+                echo 'Jobs Complete!'
+            }
+        }
+        stage('After Complete Test') {
+            steps {
+                echo 'Jobs Complete Test!'
+            }
+        }
+        stage('dependencyTrackPublisher') {
+            steps {
+                withCredentials([string(credentialsId: 'lc04mU8yypcRGouoJ4xwnxJTeaYPjxB1', variable: 'API_KEY')]) {
+                    dependencyTrackPublisher artifact: 'bom.xml', projectName: 'my-project', projectVersion: '1111', synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
+                }
+            }
+        }
+    }
+}
