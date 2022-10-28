@@ -31,12 +31,10 @@ pipeline {
                 echo 'Jobs Complete Test!'
             }
         }
-        stage('dependencyTrackPublisher') {
-            steps {
-                withCredentials([string(credentialsId: 'lc04mU8yypcRGouoJ4xwnxJTeaYPjxB1', variable: 'API_KEY')]) {
-                    dependencyTrackPublisher artifact: 'bom.xml', projectName: 'my-project', projectVersion: '1111', synchronous: true, dependencyTrackApiKey: API_KEY, projectProperties: [tags: ['tag1', 'tag2'], swidTagId: 'my swid tag', group: 'my group']
-                }
-            }
-        }
     }
+    node {
+        stage "Publish Dependency-Track results"
+    
+        dependencyTrackPublisher artifact: 'bom.xml', artifactType: 'bom', projectName: 'Acme Example', projectVersion: '1.0', synchronous: true
+    }   
 }
