@@ -31,6 +31,11 @@ pipeline {
                 echo 'Jobs Complete Test!'
             }
         }
+        stage('Pub BOM to DT') {
+            steps {        
+                curl --location --request POST 'http://localhost:8081/api/v1/bom' --header 'X-Api-Key: lc04mU8yypcRGouoJ4xwnxJTeaYPjxB1' --form 'project="${JOB_NAME}"' --form 'bom=@"bom.xml"'
+            }
+        }        
         stage("Env Variables"){
             steps{
                 bat "set"                                                     
