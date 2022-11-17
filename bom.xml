@@ -4,7 +4,7 @@
     <timestamp>2022-09-14T13:31:51-03:00</timestamp>
     <tools>
       <tool>
-        <vendor>CycloneDX</vendor>
+        <vendor>CycloneDX </vendor>
         <name>cyclonedx-gomod</name>
         <version>v1.3.0</version>
         <hashes>
