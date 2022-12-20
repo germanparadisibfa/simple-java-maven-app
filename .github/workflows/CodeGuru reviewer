@@ -1,4 +1,5 @@
 # https://github.com/aws-actions/codeguru-reviewer
+# https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/working-with-cicd.html
 
 steps:
 
